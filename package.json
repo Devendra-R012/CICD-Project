@@ -1,0 +1,12 @@
+{
+  "name": "cicd-project",
+  "version": "1.0.0",
+  "description": "Node.js application for CI/CD pipeline",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
