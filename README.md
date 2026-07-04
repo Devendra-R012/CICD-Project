@@ -14,9 +14,19 @@ The pipeline performs the following tasks:
 
 ---
 
+## Live Demo
+
+**Application URL:**
+
+http://a3b63f0f9ea0c4a21b6868ab80f7772a-1137535609.ap-south-1.elb.amazonaws.com
+
+The application is currently deployed on Amazon EKS and is publicly accessible for evaluation.
+
+---
+
 ## Architecture
 
-```
+```text
 Developer
     │
     ▼
@@ -131,15 +141,15 @@ docker build -t cicd-project .
 ### Authenticate Docker with Amazon ECR
 
 ```bash
-aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <ACCOUNT_ID>.dkr.ecr.ap-south-1.amazonaws.com
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 911167911799.dkr.ecr.ap-south-1.amazonaws.com
 ```
 
 ### Tag and Push Docker Image
 
 ```bash
-docker tag cicd-project:latest <ACCOUNT_ID>.dkr.ecr.ap-south-1.amazonaws.com/cicd-project:latest
+docker tag cicd-project:latest 911167911799.dkr.ecr.ap-south-1.amazonaws.com/cicd-project:latest
 
-docker push <ACCOUNT_ID>.dkr.ecr.ap-south-1.amazonaws.com/cicd-project:latest
+docker push 911167911799.dkr.ecr.ap-south-1.amazonaws.com/cicd-project:latest
 ```
 
 ### Deploy to Kubernetes
@@ -204,7 +214,11 @@ kubectl get svc -n monitoring
 
 ## Access the Application
 
-Retrieve the external LoadBalancer endpoint:
+The application is publicly accessible at:
+
+**http://a3b63f0f9ea0c4a21b6868ab80f7772a-1137535609.ap-south-1.elb.amazonaws.com**
+
+You can also verify the Kubernetes service:
 
 ```bash
 kubectl get svc
@@ -212,15 +226,9 @@ kubectl get svc
 
 Example Output:
 
-```
+```text
 NAME                   TYPE           EXTERNAL-IP
-cicd-project-service   LoadBalancer   <LoadBalancer-DNS>
-```
-
-Open the following URL in your browser:
-
-```
-http://<LoadBalancer-DNS>
+cicd-project-service   LoadBalancer   a3b63f0f9ea0c4a21b6868ab80f7772a-1137535609.ap-south-1.elb.amazonaws.com
 ```
 
 ---
@@ -239,21 +247,21 @@ Forward the Grafana service:
 kubectl port-forward svc/monitoring-grafana 3000:80 -n monitoring
 ```
 
-Open:
+Open Grafana in your browser:
 
-```
+```text
 http://localhost:3000
 ```
 
 Default Username:
 
-```
+```text
 admin
 ```
 
 Password:
 
-```
+```text
 (Output from the previous command)
 ```
 
@@ -261,7 +269,7 @@ Password:
 
 ## CI/CD Workflow
 
-```
+```text
 Developer
     │
     ▼
@@ -283,7 +291,7 @@ Deploy Application to Amazon EKS
 Application Updated
     │
     ▼
-Prome
+Prometheus Collects Metrics
     │
     ▼
 Grafana Displays Dashboards
@@ -291,8 +299,13 @@ Grafana Displays Dashboards
 
 ---
 
-## Author
+## Notes
 
-**Devendra Raghorte**
+- The application is currently deployed on Amazon EKS and is publicly accessible using the URL above.
+- The deployment environment will remain available for evaluation.
+- The repository includes the Dockerfile, Jenkins pipeline, and Kubernetes deployment configuration required to reproduce the deployment.
 
-GitHub: https://github.com/Devendra-R012
+---
+
+
+GitHub: https://github.com/Devendra-R012/CICD-Project.git
